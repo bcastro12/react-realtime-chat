@@ -22,10 +22,15 @@ export default function Chat({socket}) {
 
     socket.emit('message', message)
     clearInput()
+    focusInput()
   }
 
   const clearInput = () => {
     messageRef.current.value = ''
+  }
+
+  const focusInput = () => {
+    messageRef.current.focus()
   }
 
   return (
