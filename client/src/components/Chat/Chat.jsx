@@ -33,6 +33,11 @@ export default function Chat({socket}) {
     messageRef.current.focus()
   }
 
+  const getEnterKey = (e) => {
+    if(e.key === 'Enter')
+      handleSubmit()
+  }
+
   return (
     <div>
       <div className={style['chat-container']}>
@@ -47,7 +52,7 @@ export default function Chat({socket}) {
         }
         </div>
         <div className={style["chat-footer"]}>
-          <Input inputRef={messageRef} placeholder='Mensagem' fullWidth />
+          <Input inputRef={messageRef} placeholder='Mensagem' onKeyDown={(e)=>getEnterKey(e)} fullWidth />
           <SendIcon sx={{m:1, cursor: 'pointer'}} onClick={()=>handleSubmit()} color="primary" />
         </div>
       </div>
