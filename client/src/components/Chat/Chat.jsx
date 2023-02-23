@@ -5,6 +5,7 @@ import style from './Chat.module.css'
 
 export default function Chat({socket}) {
 
+  const bottomRef = useRef()
   const messageRef = useRef()
   const [messageList, setMessageList] = useState([])
 
@@ -15,6 +16,10 @@ export default function Chat({socket}) {
 
     return () => socket.off('receive_message')
   }, [socket])
+
+  useEffect(()=>{
+    scrollDown()
+  }, [messageList])
 
   const handleSubmit = () => {
     const message = messageRef.current.value
@@ -38,6 +43,10 @@ export default function Chat({socket}) {
       handleSubmit()
   }
 
+  const scrollDown = () => {
+    bottomRef.current.scrollIntoView({behavior: 'smooth'})
+  }
+
   return (
     <div>
       <div className={style['chat-container']}>
@@ -50,6 +59,7 @@ export default function Chat({socket}) {
             </div>
           ))
         }
+        <div ref={bottomRef} />
         </div>
         <div className={style["chat-footer"]}>
           <Input inputRef={messageRef} placeholder='Mensagem' onKeyDown={(e)=>getEnterKey(e)} fullWidth />
